@@ -1,0 +1,13 @@
+diff --git a/node_modules/conventional-changelog-conventionalcommits/conventional-changelog.js b/node_modules/conventional-changelog-conventionalcommits/conventional-changelog.js
+index d7b30fc..2916fe3 100644
+--- a/node_modules/conventional-changelog-conventionalcommits/conventional-changelog.js
++++ b/node_modules/conventional-changelog-conventionalcommits/conventional-changelog.js
+@@ -5,7 +5,7 @@ const parserOpts = require(`./parser-opts`)
+ const writerOpts = require(`./writer-opts`)
+ 
+ module.exports = function (config) {
+-  return Q.all([parserOpts, writerOpts])
++  return Q.all([parserOpts(config), writerOpts(config)])
+     .spread((parserOpts, writerOpts) => {
+       return { parserOpts, writerOpts }
+     })
