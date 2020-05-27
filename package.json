@@ -24,16 +24,22 @@
     "url": "https://github.com/MunifTanjim/oclif-plugin-completion"
   },
   "scripts": {
+    "prebuild": "rm -rf lib",
+    "build": "tsc -b",
     "changelog": "conventional-changelog --config .changelogrc.js -i CHANGELOG.md -s -a",
+    "postchangelog": "git add CHANGELOG.md",
     "cz": "npx git-cz",
     "postinstall": "patch-package",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && npm run readme",
+    "prepack": "npm run build && oclif-dev manifest",
     "postpack": "rm -f oclif.manifest.json",
+    "readme": "oclif-dev readme",
+    "postreadme": "git add README.md",
+    "prerelease": "git commit -m \"chore: release $npm_package_version\" && git tag $npm_package_version -am $npm_package_version",
+    "release": "yarn publish",
     "test": "echo NO TESTS",
     "posttest": "eslint . --ext .ts --config .eslintrc.js",
-    "readme": "oclif-dev readme",
-    "preversion": "npm run readme && git add README.md",
-    "postversion": "npm run changelog && git add CHANGELOG.md"
+    "preversion": "yarn config set version-git-tag false",
+    "postversion": "npm run changelog && npm run readme && git add package.json"
   },
   "dependencies": {
     "@oclif/command": "^1",
@@ -74,6 +80,7 @@
     "bin": "dummy",
     "devPlugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "repositoryPrefix": "<%- repo %>/blob/<%- version %>/<%- commandPath %>"
   }
 }
