@@ -2,7 +2,7 @@ module.exports = {
   extends: [
     'oclif',
     'oclif-typescript',
-    'prettier:prettier/recommended',
+    'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
   ],
 }
