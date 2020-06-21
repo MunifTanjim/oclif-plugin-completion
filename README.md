@@ -23,7 +23,7 @@ Usage: dummy <COMMAND> [OPTION...]
 
 Commands:
 
-  open                open a dummy
+  open   <ro|rw>      open a dummy (as read-only or read-write)
   save                save a dummy
   search              search a dummy
 
@@ -91,23 +91,24 @@ Completion will generate the suggestion based on state of runtime environment an
 
 ## Feature Support Matrix
 
-| :+1:    | :-1:        | :heavy_check_mark: | :heavy_minus_sign:    | :x:             | :grey_exclamation: | :bug: |
-| ------- | ----------- | ------------------ | --------------------- | --------------- | ------------------ | ----- |
-| Support | Unsupported | Implemented        | Partially Implemented | Not Implemented | Unknown            | Bug   |
+| :+1:      | :-1:        | :grey_exclamation: | :bug: | :heavy_check_mark: | :heavy_minus_sign:    | :x:             |
+| --------- | ----------- | ------------------ | ----- | ------------------ | --------------------- | --------------- |
+| Supported | Unsupported | Unknown            | Bug   | Implemented        | Partially Implemented | Not Implemented |
 
-| oclif      | Feature                      | Example                            | Bash                    | Zsh                     |
-| ---------- | ---------------------------- | ---------------------------------- | ----------------------- | ----------------------- |
-| :+1:       | Basic Long                   | `--name john --age 42 --overwrite` | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1:       | Alternate Long               | `--name=john --age=42`             | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1:       | Basic Short                  | `-n john -a 42 -o`                 | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1:       | Alternative Short            | `-njohn -a42`                      | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1:       | Stacking Short               | `-ov`                              | :grey_exclamation: :x:  | :+1: :heavy_check_mark: |
-| :+1:       | Stacking Short with argument | `-ova 42`                          | :grey_exclamation: :x:  | :+1: :heavy_check_mark: |
-| :+1:       | Options / Enum               | `--tag a`                          | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1: :bug: | Multiple                     | `-t c --tag d`                     | :+1: :heavy_minus_sign: | :+1: :heavy_minus_sign: |
-| :-1:       | File Path completion         | `--file ...`                       | :+1: :heavy_minus_sign: | :+1: :x:                |
-| :-1:       | Directory Path completion    | `--dir ...`                        | :+1: :heavy_minus_sign: | :+1: :x:                |
-| :-1:       | Dynamic Runtime completion   | `--dir ./dummies --id 111`         | :+1: :x:                | :+1: :x:                |
+| oclif      | Feature                      | Example                            | Bash                    | Zsh                     | Fish                    |
+| ---------- | ---------------------------- | ---------------------------------- | ----------------------- | ----------------------- | ----------------------- |
+| :+1:       | Positional argument          | `ro`                               | :grey_exclamation: :x:  | :+1: :heavy_check_mark: | :grey_exclamation: :x:  |
+| :+1:       | Basic Long                   | `--name john --age 42 --overwrite` | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Alternate Long               | `--name=john --age=42`             | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Basic Short                  | `-n john -a 42 -o`                 | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Alternative Short            | `-njohn -a42`                      | :+1: :x:                | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short               | `-ov`                              | :grey_exclamation: :x:  | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short with argument | `-ova 42`                          | :grey_exclamation: :x:  | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Options / Enum               | `--tag a`                          | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1: :bug: | Multiple                     | `-t c --tag d`                     | :+1: :heavy_minus_sign: | :+1: :heavy_minus_sign: | :+1: :heavy_minus_sign: |
+| :-1:       | File Path completion         | `--file ...`                       | :+1: :heavy_minus_sign: | :+1: :x:                | :+1: :heavy_minus_sign: |
+| :-1:       | Directory Path completion    | `--dir ...`                        | :+1: :heavy_minus_sign: | :+1: :x:                | :+1: :heavy_minus_sign: |
+| :-1:       | Dynamic Runtime completion   | `--dir ./dummies --id 111`         | :+1: :x:                | :+1: :x:                | :+1: :x:                |
 
 # Supported Shells
 
@@ -129,7 +130,7 @@ Add the following line in your `.bashrc` file:
 eval "$(dummy completion:generate --shell bash);"
 ```
 
-**vanilla (local completion)**:
+**vanilla (user directory)**:
 
 Run the following command:
 
@@ -168,6 +169,24 @@ Run the following commands:
 ```sh
 dummy completion:generate --shell zsh > ~/.local/share/zsh/completions/_dummy
 zinit creinstall ~/.local/share/zsh/completions
+```
+
+## Fish
+
+Reference: [Fish Completion](https://fishshell.com/docs/current/cmds/complete.html)
+
+### Fish Usage
+
+Reference: [Where to put completions](https://fishshell.com/docs/current/index.html#where-to-put-completions)
+
+You can enable completion for Fish using various methods. A few of them are mentioned below:
+
+**vanilla (user directory)**:
+
+Run the following command:
+
+```sh
+dummy completion:generate --shell fish | tee ~/.config/fish/completions/dummy.fish
 ```
 
 # Commands
