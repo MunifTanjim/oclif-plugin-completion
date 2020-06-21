@@ -23,3 +23,7 @@ export function template(
     return parts.join('')
   }
 }
+
+export const getFirstLine = (string = ''): string => {
+  return string.split('\n')[0]
+}

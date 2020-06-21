@@ -1,5 +1,6 @@
 import { CompletionBase } from '../../base'
 import { generateCompletionScriptForBash } from '../../utils/bash'
+import { generateCompletionScriptForFish } from '../../utils/fish'
 import { generateCompletionScriptForZsh } from '../../utils/zsh'
 
 export default class CompletionGenerate extends CompletionBase {
@@ -21,6 +22,10 @@ export default class CompletionGenerate extends CompletionBase {
 
     if (shell === 'bash') {
       scriptContent = generateCompletionScriptForBash(this.config)
+    }
+
+    if (shell === 'fish') {
+      scriptContent = generateCompletionScriptForFish(this.config)
     }
 
     if (shell === 'zsh') {
