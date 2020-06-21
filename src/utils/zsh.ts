@@ -1,19 +1,11 @@
-type Command = import('@oclif/command').Command
-
-const escapeString = (string: string, chars: string) => {
-  const pattern = new RegExp(`([${chars}])`, 'g')
-  return string.replace(pattern, '\\$1')
-}
-
-const getFirstLine = (string: string = ''): string => {
-  return string.split('\n')[0]
-}
+import type { Command } from '@oclif/command'
+import { escapeString, getFirstLine } from './template'
 
 const getArgs = (command: Command['config']['commands'][number]): string[] => {
   const args: string[] = []
 
   command.args.forEach((arg, index) => {
-    let MESSAGE = ` `
+    const MESSAGE = ` `
     let ACTION = ``
 
     if (arg.options && arg.options.length > 0) {
@@ -26,7 +18,7 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
   })
 
   Object.entries(command.flags).forEach(([name, flag]) => {
-    let OPTNAME: {
+    const OPTNAME: {
       long: string
       neg?: string
       short?: string
@@ -48,13 +40,17 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
       GROUP = `(${Object.values(OPTNAME).filter(Boolean).join(' ')})`
     }
 
-    // TODO: need upstream fix. `flag.multiple` property does not exist
-    // @ts-ignore
-    if (flag.type === 'option' && flag.multiple) {
-      OPTNAME.long = `*${OPTNAME.long}`
+    if (flag.type === 'option') {
+      // TODO: need upstream fix. `flag.multiple` property does not exist
+      // Upstream PR: https://github.com/oclif/config/pull/113
+      // @ts-expect-error
+      if (flag.multiple || !flag.multiple) {
+        // Until the Upstream PR is merged, everything is multiple 🤷‍♂️
+        OPTNAME.long = `*${OPTNAME.long}`
 
-      if (OPTNAME.short) {
-        OPTNAME.short = `*${OPTNAME.short}`
+        if (OPTNAME.short) {
+          OPTNAME.short = `*${OPTNAME.short}`
+        }
       }
     }
 
@@ -74,9 +70,9 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
       OPTSPEC = `${OPTNAME.long}`
     }
 
-    let EXPLANATION = `[${escapeString(getFirstLine(flag.description), ':')}]`
+    const EXPLANATION = `[${escapeString(getFirstLine(flag.description), ':')}]`
 
-    let MESSAGE = `${name}`
+    const MESSAGE = `${name}`
     let ACTION = ``
     if (flag.type === 'option' && flag.options && flag.options.length > 0) {
       ACTION = `(${flag.options.join(' ')})`
@@ -153,7 +149,7 @@ function _${bin} {
 
     const args = getArgs(command)
 
-    if (args.length) {
+    if (args.length > 0) {
       functionParts.push(
         `_arguments -s -w -S -C ${args.join(` \\\n${' '.repeat(4)}`)}`
       )

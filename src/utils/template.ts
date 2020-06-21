@@ -24,6 +24,11 @@ export function template(
   }
 }
 
+export const escapeString = (string: string, chars: string) => {
+  const pattern = new RegExp(`([${chars}])`, 'g')
+  return string.replace(pattern, '\\$1')
+}
+
 export const getFirstLine = (string = ''): string => {
   return string.split('\n')[0]
 }
