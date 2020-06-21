@@ -91,21 +91,51 @@ Completion will generate the suggestion based on state of runtime environment an
 
 ## Feature Support Matrix
 
-| oclif | Feature                      | Example                            | Zsh                     |
-| ----- | ---------------------------- | ---------------------------------- | ----------------------- |
-| :+1:  | Basic Long                   | `--name john --age 42 --overwrite` | :+1: :heavy_check_mark: |
-| :+1:  | Alternate Long               | `--name=john --age=42`             | :+1: :heavy_check_mark: |
-| :+1:  | Basic Short                  | `-n john -a 42 -o`                 | :+1: :heavy_check_mark: |
-| :+1:  | Alternative Short            | `-njohn -a42`                      | :+1: :heavy_check_mark: |
-| :+1:  | Stacking Short               | `-ov`                              | :+1: :heavy_check_mark: |
-| :+1:  | Stacking Short with argument | `-ova 42`                          | :+1: :heavy_check_mark: |
-| :+1:  | Options / Enum               | `--tag a`                          | :+1: :heavy_check_mark: |
-| :+1:  | Multiple                     | `-t c --tag d`                     | :+1: :heavy_check_mark: |
-| :x:   | File Path completion         | `--file ...`                       | :+1: :grey_exclamation: |
-| :x:   | Directory Path completion    | `--dir ...`                        | :+1: :grey_exclamation: |
-| :x:   | Dynamic Runtime completion   | `--dir ./dummies --id 111`         | :+1: :grey_exclamation: |
+| :+1:    | :-1:        | :heavy_check_mark: | :heavy_minus_sign:    | :x:             | :grey_exclamation: | :bug |
+| ------- | ----------- | ------------------ | --------------------- | --------------- | ------------------ | ---- |
+| Support | Unsupported | Implemented        | Partially Implemented | Not Implemented | Unknown            | Bug  |
+
+| oclif      | Feature                      | Example                            | Bash                    | Zsh                     |
+| ---------- | ---------------------------- | ---------------------------------- | ----------------------- | ----------------------- |
+| :+1:       | Basic Long                   | `--name john --age 42 --overwrite` | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Alternate Long               | `--name=john --age=42`             | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Basic Short                  | `-n john -a 42 -o`                 | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Alternative Short            | `-njohn -a42`                      | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short               | `-ov`                              | :grey_exclamation: :x   | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short with argument | `-ova 42`                          | :grey_exclamation: :x   | :+1: :heavy_check_mark: |
+| :+1:       | Options / Enum               | `--tag a`                          | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
+| :+1: :bug: | Multiple                     | `-t c --tag d`                     | :+1: :heavy_check_mark: | :+1: :heavy_minus_sign: |
+| :-1:       | File Path completion         | `--file ...`                       | :+1: :heavy_minus_sign: | :+1: :x:                |
+| :-1:       | Directory Path completion    | `--dir ...`                        | :+1: :heavy_minus_sign: | :+1: :x:                |
+| :-1:       | Dynamic Runtime completion   | `--dir ./dummies --id 111`         | :+1: :x:                | :+1: :x:                |
 
 # Supported Shells
+
+## Bash
+
+Reference: [Bash Completion](https://github.com/scop/bash-completion)
+
+You need to have `bash-completion` package installed on your system.
+
+### Bash Usage
+
+You can enable completion for Bash using various methods. A few of them are mentioned below:
+
+**vanilla (.bashrc)**:
+
+Add the following line in your `.bashrc` file:
+
+```sh
+eval "$(dummy completion:generate --shell bash);"
+```
+
+**vanilla (local completion)**:
+
+Run the following command:
+
+```sh
+dummy completion:generate --shell bash | tee ~/.local/share/bash-completion/completions/dummy
+```
 
 ## Zsh
 
@@ -156,13 +186,13 @@ USAGE
   $ dummy completion
 
 OPTIONS
-  -s, --shell=zsh  (required) Name of shell
+  -s, --shell=bash|zsh  (required) Name of shell
 
 EXAMPLE
   $ dummy completion --shell zsh
 ```
 
-_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.1.0/src/commands/completion/index.ts)_
+_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.2.0/src/commands/completion/index.ts)_
 
 ## `dummy completion:generate`
 
@@ -173,12 +203,12 @@ USAGE
   $ dummy completion:generate
 
 OPTIONS
-  -s, --shell=zsh  (required) Name of shell
+  -s, --shell=bash|zsh  (required) Name of shell
 
 EXAMPLE
   $ dummy completion:generate --shell zsh
 ```
 
-_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.1.0/src/commands/completion/generate.ts)_
+_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.2.0/src/commands/completion/generate.ts)_
 
 <!-- commandsstop -->

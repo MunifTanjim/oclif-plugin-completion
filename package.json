@@ -1,6 +1,6 @@
 {
   "name": "oclif-plugin-completion",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "oclif plugin for generating shell completions",
   "keywords": [
     "oclif",
