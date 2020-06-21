@@ -91,9 +91,9 @@ Completion will generate the suggestion based on state of runtime environment an
 
 ## Feature Support Matrix
 
-| :+1:    | :-1:        | :heavy_check_mark: | :heavy_minus_sign:    | :x:             | :grey_exclamation: | :bug |
-| ------- | ----------- | ------------------ | --------------------- | --------------- | ------------------ | ---- |
-| Support | Unsupported | Implemented        | Partially Implemented | Not Implemented | Unknown            | Bug  |
+| :+1:    | :-1:        | :heavy_check_mark: | :heavy_minus_sign:    | :x:             | :grey_exclamation: | :bug: |
+| ------- | ----------- | ------------------ | --------------------- | --------------- | ------------------ | ----- |
+| Support | Unsupported | Implemented        | Partially Implemented | Not Implemented | Unknown            | Bug   |
 
 | oclif      | Feature                      | Example                            | Bash                    | Zsh                     |
 | ---------- | ---------------------------- | ---------------------------------- | ----------------------- | ----------------------- |
@@ -101,10 +101,10 @@ Completion will generate the suggestion based on state of runtime environment an
 | :+1:       | Alternate Long               | `--name=john --age=42`             | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
 | :+1:       | Basic Short                  | `-n john -a 42 -o`                 | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
 | :+1:       | Alternative Short            | `-njohn -a42`                      | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1:       | Stacking Short               | `-ov`                              | :grey_exclamation: :x   | :+1: :heavy_check_mark: |
-| :+1:       | Stacking Short with argument | `-ova 42`                          | :grey_exclamation: :x   | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short               | `-ov`                              | :grey_exclamation: :x:  | :+1: :heavy_check_mark: |
+| :+1:       | Stacking Short with argument | `-ova 42`                          | :grey_exclamation: :x:  | :+1: :heavy_check_mark: |
 | :+1:       | Options / Enum               | `--tag a`                          | :+1: :heavy_check_mark: | :+1: :heavy_check_mark: |
-| :+1: :bug: | Multiple                     | `-t c --tag d`                     | :+1: :heavy_check_mark: | :+1: :heavy_minus_sign: |
+| :+1: :bug: | Multiple                     | `-t c --tag d`                     | :+1: :heavy_minus_sign: | :+1: :heavy_minus_sign: |
 | :-1:       | File Path completion         | `--file ...`                       | :+1: :heavy_minus_sign: | :+1: :x:                |
 | :-1:       | Directory Path completion    | `--dir ...`                        | :+1: :heavy_minus_sign: | :+1: :x:                |
 | :-1:       | Dynamic Runtime completion   | `--dir ./dummies --id 111`         | :+1: :x:                | :+1: :x:                |
