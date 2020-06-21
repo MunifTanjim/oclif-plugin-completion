@@ -8,7 +8,7 @@ export abstract class CompletionBase extends Command {
       char: 's',
       env: 'SHELL',
       parse: (shell) => basename(shell),
-      options: ['zsh'],
+      options: ['bash', 'zsh'],
       required: true,
     }),
   }

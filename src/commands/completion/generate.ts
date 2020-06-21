@@ -1,4 +1,5 @@
 import { CompletionBase } from '../../base'
+import { generateCompletionScriptForBash } from '../../utils/bash'
 import { generateCompletionScriptForZsh } from '../../utils/zsh'
 
 export default class CompletionGenerate extends CompletionBase {
@@ -17,6 +18,11 @@ export default class CompletionGenerate extends CompletionBase {
     const shell = flags.shell
 
     let scriptContent = ''
+
+    if (shell === 'bash') {
+      scriptContent = generateCompletionScriptForBash(this.config)
+    }
+
     if (shell === 'zsh') {
       scriptContent = generateCompletionScriptForZsh(this.config)
     }
