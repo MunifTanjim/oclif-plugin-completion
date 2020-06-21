@@ -205,13 +205,13 @@ USAGE
   $ dummy completion
 
 OPTIONS
-  -s, --shell=bash|zsh  (required) Name of shell
+  -s, --shell=bash|fish|zsh  (required) Name of shell
 
 EXAMPLE
   $ dummy completion --shell zsh
 ```
 
-_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.2.0/src/commands/completion/index.ts)_
+_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.3.0/src/commands/completion/index.ts)_
 
 ## `dummy completion:generate`
 
@@ -222,12 +222,12 @@ USAGE
   $ dummy completion:generate
 
 OPTIONS
-  -s, --shell=bash|zsh  (required) Name of shell
+  -s, --shell=bash|fish|zsh  (required) Name of shell
 
 EXAMPLE
   $ dummy completion:generate --shell zsh
 ```
 
-_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.2.0/src/commands/completion/generate.ts)_
+_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.3.0/src/commands/completion/generate.ts)_
 
 <!-- commandsstop -->
