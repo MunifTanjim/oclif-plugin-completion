@@ -21,3 +21,10 @@
 * add completion for fish ([575dffe](https://github.com/MunifTanjim/oclif-plugin-completion/commit/575dffe70ca8a8bd49d74ebf51ab495a8355d65b))
 * make all flags multiple for zsh ([56c7436](https://github.com/MunifTanjim/oclif-plugin-completion/commit/56c74360a5c5410c4f9f0e242134de6bfe1551b9))
 
+### [0.3.1](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.3.0...0.3.1) (2020-06-30)
+
+
+### Bug Fixes
+
+* zsh completion ([c51386e](https://github.com/MunifTanjim/oclif-plugin-completion/commit/c51386e9bb5c8182cad3c1df8413d2f4b02143a4))
+
