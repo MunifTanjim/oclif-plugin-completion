@@ -18,6 +18,8 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
   })
 
   Object.entries(command.flags).forEach(([name, flag]) => {
+    let GROUP: string | null = null
+
     const OPTNAME: {
       long: string
       neg?: string
@@ -26,21 +28,27 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
       long: `--${name}`,
     }
 
-    if (flag.type === 'boolean' && flag.allowNo) {
-      OPTNAME.neg = `--no-${name}`
-    }
-
     if (flag.char) {
       OPTNAME.short = `-${flag.char}`
     }
 
-    let GROUP: string | null = null
+    if (flag.type === 'boolean') {
+      if (flag.allowNo) {
+        OPTNAME.neg = `--no-${name}`
+      }
 
-    if (OPTNAME.neg || OPTNAME.short) {
-      GROUP = `(${Object.values(OPTNAME).filter(Boolean).join(' ')})`
+      if (OPTNAME.neg || OPTNAME.short) {
+        GROUP = `(${Object.values(OPTNAME).filter(Boolean).join(' ')})`
+      }
     }
 
     if (flag.type === 'option') {
+      OPTNAME.long = `${OPTNAME.long}=`
+
+      if (OPTNAME.short) {
+        OPTNAME.short = `${OPTNAME.short}+`
+      }
+
       // TODO: need upstream fix. `flag.multiple` property does not exist
       // Upstream PR: https://github.com/oclif/config/pull/113
       // @ts-expect-error
@@ -51,28 +59,30 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
         if (OPTNAME.short) {
           OPTNAME.short = `*${OPTNAME.short}`
         }
+      } else if (OPTNAME.short) {
+        GROUP = `(${Object.values(OPTNAME).filter(Boolean).join(' ')})`
       }
     }
 
-    if (flag.type !== 'boolean') {
-      OPTNAME.long = `${OPTNAME.long}=`
-
-      if (OPTNAME.short) {
-        OPTNAME.short = `${OPTNAME.short}+`
-      }
-    }
-
-    let OPTSPEC = ``
+    const OPTSPEC: string[] = []
 
     if (GROUP) {
-      OPTSPEC = `{${Object.values(OPTNAME).filter(Boolean).join(',')}}`
+      OPTSPEC.push(`{${Object.values(OPTNAME).filter(Boolean).join(',')}}`)
     } else {
-      OPTSPEC = `${OPTNAME.long}`
+      OPTSPEC.push(`${OPTNAME.long}`)
+
+      if (OPTNAME.short) {
+        OPTSPEC.push(`${OPTNAME.short}`)
+      }
     }
 
-    const EXPLANATION = `[${escapeString(getFirstLine(flag.description), ':')}]`
+    const EXPLANATION = `[${escapeString(
+      getFirstLine(flag.description),
+      ':"'
+    )}]`
 
     const MESSAGE = `${name}`
+
     let ACTION = ``
     if (flag.type === 'option' && flag.options && flag.options.length > 0) {
       ACTION = `(${flag.options.join(' ')})`
@@ -82,14 +92,16 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
 
     let OPTARG = ``
 
-    if (flag.type !== 'boolean') {
+    if (flag.type === 'option') {
       OPTARG = `:${MESSAGE}:${ACTION}`
     }
 
     if (GROUP) {
       args.push(`"${GROUP}"${OPTSPEC}"${EXPLANATION}${OPTARG}"`)
     } else {
-      args.push(`"${OPTSPEC}${EXPLANATION}${OPTARG}"`)
+      args.push(
+        ...OPTSPEC.map((optspec) => `"${optspec}${EXPLANATION}${OPTARG}"`)
+      )
     }
   })
 
