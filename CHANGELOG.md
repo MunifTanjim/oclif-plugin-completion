@@ -28,3 +28,5 @@
 
 * zsh completion ([c51386e](https://github.com/MunifTanjim/oclif-plugin-completion/commit/c51386e9bb5c8182cad3c1df8413d2f4b02143a4))
 
+### [0.3.2](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.3.1...0.3.2) (2020-07-07)
+
