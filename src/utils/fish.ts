@@ -78,7 +78,9 @@ export function getInstructionsForFish({
     ``,
     `Usually this should work:`,
     ``,
-    `  $ ${bin} completion:generate --shell=${shell} > ~/.config/fish/completions/${scriptName}`,
+    `  $ ${bin} completion:generate --shell=${shell} | tee ~/.config/fish/completions/${scriptName}`,
+    ``,
+    `For more info, visit: https://www.npmjs.com/package/oclif-plugin-completion#${shell}`,
     ``,
     `Enjoy!`,
   ]

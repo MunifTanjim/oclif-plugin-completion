@@ -445,7 +445,9 @@ export function getInstructionsForBash({
     ``,
     `Usually this should work:`,
     ``,
-    `  $ ${bin} completion:generate --shell=${shell} > ~/.local/share/bash-completion/completions/${scriptName}`,
+    `  $ ${bin} completion:generate --shell=${shell} | tee ~/.local/share/bash-completion/completions/${scriptName}`,
+    ``,
+    `For more info, visit: https://www.npmjs.com/package/oclif-plugin-completion#${shell}`,
     ``,
     `Enjoy!`,
   ]
