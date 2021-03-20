@@ -32,13 +32,14 @@
     "prepack": "npm run build && oclif-dev manifest",
     "postpack": "rm -f oclif.manifest.json",
     "readme": "oclif-dev readme",
-    "postreadme": "git add README.md",
+    "postreadme": "prettier --write README.md && git add README.md",
     "prerelease": "git commit -m \"chore: release $npm_package_version\" && git tag $npm_package_version -am $npm_package_version",
     "release": "yarn publish",
     "test": "echo NO TESTS",
     "posttest": "eslint . --ext .ts --config .eslintrc.js",
     "preversion": "yarn config set version-git-tag false",
-    "postversion": "npm run changelog && npm run readme && git add package.json"
+    "version": "npm run changelog && npm run readme",
+    "postversion": "git add package.json"
   },
   "dependencies": {
     "@oclif/command": "^1",
