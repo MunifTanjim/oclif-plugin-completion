@@ -57,3 +57,30 @@ export function generateCompletionScriptForFish({
 
   return scriptParts.join('\n'.repeat(2))
 }
+
+export function getInstructionsForFish({
+  bin,
+  shell,
+}: {
+  bin: string
+  shell: string
+}): string[] {
+  const scriptName = `${bin}.fish`
+
+  const lines = [
+    `Running the following command will generate the completion script for ${shell} shell:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > ${scriptName}`,
+    ``,
+    `You need to put that "${scriptName}" file in one of the directories present in "$fish_complete_path" environment variable:`,
+    ``,
+    `  $ echo $fish_complete_path`,
+    ``,
+    `Usually this should work:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > ~/.config/fish/completions/${scriptName}`,
+    ``,
+    `Enjoy!`,
+  ]
+  return lines
+}

@@ -419,3 +419,36 @@ export function generateCompletionScriptForBash({
 
   return scriptParts.join('\n'.repeat(2))
 }
+
+export function getInstructionsForBash({
+  bin,
+  shell,
+}: {
+  bin: string
+  shell: string
+}): string[] {
+  const scriptName = bin
+
+  const lines = [
+    `Make sure you have the "bash-completion" package installed on your system.`,
+    ``,
+    `Running the following command will generate the completion script for ${shell} shell:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > ${scriptName}`,
+    ``,
+    `You need to put that "${scriptName}" file in one of the following directories (depending on your system):`,
+    ``,
+    `- $XDG_DATA_HOME/bash-completion/completions`,
+    `- ~/.local/share/bash-completion/completions`,
+    `- /usr/local/share/bash-completion/completions`,
+    `- /usr/share/bash-completion/completions`,
+    ``,
+    `Usually this should work:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > ~/.local/share/bash-completion/completions/${scriptName}`,
+    ``,
+    `Enjoy!`,
+  ]
+
+  return lines
+}

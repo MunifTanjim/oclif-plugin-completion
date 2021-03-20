@@ -178,3 +178,30 @@ function _${bin}_${command.id} {
 
   return scriptParts.join('\n'.repeat(2))
 }
+
+export function getInstructionsForZsh({
+  bin,
+  shell,
+}: {
+  bin: string
+  shell: string
+}): string[] {
+  const scriptName = `_${bin}`
+
+  const lines = [
+    `Running the following command will generate the completion script for ${shell} shell:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > ${scriptName}`,
+    ``,
+    `You need to put that "${scriptName}" file in one of the directories present in "$FPATH" environment variable:`,
+    ``,
+    `  $ echo $FPATH`,
+    ``,
+    `Usually this should work by automatically find an appropriate directory for you:`,
+    ``,
+    `  $ ${bin} completion:generate --shell=${shell} > "$(echo \${FPATH} | tr ':' '\\n' | grep site-functions | head -n1)/${scriptName}"`,
+    ``,
+    `Enjoy!`,
+  ]
+  return lines
+}
