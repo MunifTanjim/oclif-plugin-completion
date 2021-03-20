@@ -130,13 +130,19 @@ Add the following line in your `.bashrc` file:
 eval "$(dummy completion:generate --shell bash);"
 ```
 
-**vanilla (user directory)**:
+**vanilla (completions directory)**:
 
 Run the following command:
 
 ```sh
 dummy completion:generate --shell bash | tee ~/.local/share/bash-completion/completions/dummy
 ```
+
+Depending on you system, the completion script can also be put into one of these directories:
+
+- `${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions` (linux/macos)
+- `/usr/local/share/bash-completion/completions` (macos)
+- `/usr/share/bash-completion/completions` (linux)
 
 ## Zsh
 
@@ -154,12 +160,18 @@ Add the following line in your `.zshrc` file:
 eval "$(dummy completion:generate --shell zsh); compdef _dummy dummy;"
 ```
 
-**vanilla (vendor-completions)**:
+**vanilla (site-functions directory)**:
 
 Run the following command:
 
 ```sh
-dummy completion:generate --shell zsh | sudo tee /usr/share/zsh/vendor-completions/_dummy
+dummy completion:generate --shell zsh | tee "$(echo ${FPATH} | tr ':' '\n' | grep site-functions | head -n1)/_dummy"
+```
+
+The completion script can also be put into one of the directories present in `$FPATH` variable:
+
+```sh
+echo $FPATH
 ```
 
 [**zinit**](https://github.com/zdharma/zinit):
@@ -181,7 +193,7 @@ Reference: [Where to put completions](https://fishshell.com/docs/current/index.h
 
 You can enable completion for Fish using various methods. A few of them are mentioned below:
 
-**vanilla (user directory)**:
+**vanilla (completions directory)**:
 
 Run the following command:
 
