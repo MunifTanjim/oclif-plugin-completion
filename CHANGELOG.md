@@ -44,3 +44,10 @@
 
 * update usage guide ([16d4a98](https://github.com/MunifTanjim/oclif-plugin-completion/commit/16d4a98e5f0bd4ea5585320912ceb7412073b84b))
 
+## [0.5.0](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.4.1...0.5.0) (2021-03-20)
+
+
+### Bug Fixes
+
+* escape description string for fish properly ([52aff4a](https://github.com/MunifTanjim/oclif-plugin-completion/commit/52aff4af19e49ff0e4fbd6fb16904afab448413c))
+
