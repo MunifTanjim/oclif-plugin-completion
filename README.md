@@ -223,7 +223,7 @@ EXAMPLE
   $ dummy completion --shell zsh
 ```
 
-_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.4.0/src/commands/completion/index.ts)_
+_See code: [src/commands/completion/index.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.4.1/src/commands/completion/index.ts)_
 
 ## `dummy completion:generate`
 
@@ -240,6 +240,6 @@ EXAMPLE
   $ dummy completion:generate --shell zsh
 ```
 
-_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.4.0/src/commands/completion/generate.ts)_
+_See code: [src/commands/completion/generate.ts](https://github.com/MunifTanjim/oclif-plugin-completion/blob/0.4.1/src/commands/completion/generate.ts)_
 
 <!-- commandsstop -->

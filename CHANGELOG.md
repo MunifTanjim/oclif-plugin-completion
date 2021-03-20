@@ -37,3 +37,10 @@
 
 * integrate usage guide ([2af585c](https://github.com/MunifTanjim/oclif-plugin-completion/commit/2af585ccd00b569f9d4fa1cd26665c6c670c42fa))
 
+### [0.4.1](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.4.0...0.4.1) (2021-03-20)
+
+
+### Features
+
+* update usage guide ([16d4a98](https://github.com/MunifTanjim/oclif-plugin-completion/commit/16d4a98e5f0bd4ea5585320912ceb7412073b84b))
+
