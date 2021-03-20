@@ -1,5 +1,5 @@
 import type { Command } from '@oclif/command'
-import { getFirstLine } from './template'
+import { escapeString, getFirstLine } from './template'
 
 export function generateCompletionScriptForFish({
   bin,
@@ -23,7 +23,7 @@ export function generateCompletionScriptForFish({
     commandParts.push(
       `complete -c ${bin} -n "not $seen $commands" -f -a ${
         command.id
-      } -d '${getFirstLine(command.description)}'`
+      } -d '${escapeString(getFirstLine(command.description), "'")}'`
     )
 
     for (const [name, flag] of Object.entries(command.flags)) {
@@ -46,7 +46,7 @@ export function generateCompletionScriptForFish({
       }
 
       if (flag.description) {
-        flagPart += ` -d "${getFirstLine(flag.description)}"`
+        flagPart += ` -d '${escapeString(getFirstLine(flag.description), "'")}'`
       }
 
       commandParts.push(flagPart)
