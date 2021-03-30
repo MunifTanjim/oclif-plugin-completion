@@ -4,7 +4,7 @@ import { getInstructionsForFish } from '../../utils/fish'
 import { getInstructionsForZsh } from '../../utils/zsh'
 
 export default class Completion extends CompletionBase {
-  static description = 'Add shell completion'
+  static description = 'Genetate shell completion script'
 
   static args = []
 
