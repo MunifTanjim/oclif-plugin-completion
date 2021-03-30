@@ -110,9 +110,10 @@ const getArgs = (command: Command['config']['commands'][number]): string[] => {
 
 export function generateCompletionScriptForZsh({
   bin,
+  aliases,
   commands,
-}: Command['config']) {
-  const scriptParts = [`#compdef _${bin} ${bin}`]
+}: Pick<Command['config'], 'bin' | 'commands'> & { aliases: string[] }) {
+  const scriptParts = [`#compdef ${[bin, ...aliases].join(' ')}`]
 
   const rootCommandPart = `
 function _${bin} {
@@ -205,5 +206,6 @@ export function getInstructionsForZsh({
     ``,
     `Enjoy!`,
   ]
+
   return lines
 }
