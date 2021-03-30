@@ -58,3 +58,15 @@
 
 * update description ([1a39c43](https://github.com/MunifTanjim/oclif-plugin-completion/commit/1a39c4329c163b6a6cfc1ec261a30f21470b5ef9))
 
+## [0.6.0](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.5.1...0.6.0) (2021-03-30)
+
+
+### Features
+
+* add support for command aliases ([62db201](https://github.com/MunifTanjim/oclif-plugin-completion/commit/62db20150c65b4d24a3bdec099e20b459072d7a1))
+
+
+### Bug Fixes
+
+* typo in description ([708e310](https://github.com/MunifTanjim/oclif-plugin-completion/commit/708e31053062e15979d5d340e5a6c9a1f686acf4))
+
