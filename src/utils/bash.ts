@@ -221,8 +221,8 @@ __${'bin'}_handle_word()
   return bootstrapTemplate({ bin: rootCommandName })
 }
 
-const getInit = (rootCommandName: string) => {
-  const initTemplate = template`
+const getInit = (bin: string, aliases: string[]) => {
+  const initFunctionTemplate = template`
 __${'bin'}_init()
 {
   __${'bin'}_debug ""
@@ -256,20 +256,47 @@ __${'bin'}_init()
 
   __${'bin'}_handle_word
 }
+`
 
+  const initTemplate = template`
 if [[ $(type -t compopt) = "builtin" ]]; then
-  complete -o default -F __${'bin'}_init ${'bin'}
+  ${'initForBuiltin'}
 else
-  complete -o default -o nospace -F __${'bin'}_init ${'bin'}
+  ${'init'}
 fi
 `
-  return initTemplate({ bin: rootCommandName })
+
+  const commandNames = [bin, ...aliases]
+
+  const parts = [
+    initFunctionTemplate({ bin }).trim(),
+    initTemplate({
+      init: commandNames
+        .map((name) => {
+          return template`complete -o default -o nospace -F __${'bin'}_init ${'name'}`(
+            { bin, name }
+          )
+        })
+        .join('\n  '),
+      initForBuiltin: commandNames
+        .map((name) => {
+          return template`complete -o default -F __${'bin'}_init ${'name'}`({
+            bin,
+            name,
+          })
+        })
+        .join('\n  '),
+    }).trim(),
+  ]
+
+  return parts.join('\n'.repeat(2))
 }
 
 export function generateCompletionScriptForBash({
   bin,
+  aliases,
   commands,
-}: Command['config']) {
+}: Pick<Command['config'], 'bin' | 'commands'> & { aliases: string[] }) {
   const scriptParts = []
 
   scriptParts.push(getBootstrap(bin))
@@ -415,7 +442,20 @@ export function generateCompletionScriptForBash({
 
   scriptParts.push(rootCommandParts.join(`\n`))
 
-  scriptParts.push(getInit(bin))
+  scriptParts.push(getInit(bin, aliases))
+
+  return scriptParts.join('\n'.repeat(2))
+}
+
+export function generateCompletionAliasScriptForBash({
+  bin,
+}: {
+  bin: string
+  alias: string
+}) {
+  const scriptParts: string[] = []
+
+  scriptParts.push(`_xfunc ${bin} __${bin}_init`)
 
   return scriptParts.join('\n'.repeat(2))
 }
@@ -423,34 +463,66 @@ export function generateCompletionScriptForBash({
 export function getInstructionsForBash({
   bin,
   shell,
+  aliases,
 }: {
   bin: string
   shell: string
+  aliases: string[]
 }): string[] {
-  const scriptName = bin
+  const scriptName = (name: string) => name
 
   const lines = [
     `Make sure you have the "bash-completion" package installed on your system.`,
     ``,
     `Running the following command will generate the completion script for ${shell} shell:`,
     ``,
-    `  $ ${bin} completion:generate --shell=${shell} > ${scriptName}`,
+    `  $ ${bin} completion:generate --shell=${shell} > ${scriptName(bin)}`,
+  ]
+
+  lines.push(
     ``,
-    `You need to put that "${scriptName}" file in one of the following directories (depending on your system):`,
+    `You need to put that "${scriptName(
+      bin
+    )}" file in one of the following directories (depending on your system):`,
     ``,
-    `- $XDG_DATA_HOME/bash-completion/completions`,
-    `- ~/.local/share/bash-completion/completions`,
-    `- /usr/local/share/bash-completion/completions`,
-    `- /usr/share/bash-completion/completions`,
+    `  - $XDG_DATA_HOME/bash-completion/completions`,
+    `  - ~/.local/share/bash-completion/completions`,
+    `  - /usr/local/share/bash-completion/completions`,
+    `  - /usr/share/bash-completion/completions`,
     ``,
     `Usually this should work:`,
     ``,
-    `  $ ${bin} completion:generate --shell=${shell} | tee ~/.local/share/bash-completion/completions/${scriptName}`,
+    `  $ ${bin} completion:generate --shell=${shell} | tee ~/.local/share/bash-completion/completions/${scriptName(
+      bin
+    )}`
+  )
+
+  if (aliases.length > 0) {
+    const plural = aliases.length > 1
+    lines.push(
+      ``,
+      `Also, '${bin}' provides ${plural ? 'these' : 'the'} ${
+        plural ? 'aliases' : 'alias'
+      }: '${aliases.join("', '")}'. You can generate completion ${
+        plural ? 'scripts' : 'script'
+      } for ${
+        plural ? 'those' : 'that'
+      } using the "completion:generate:alias" command. For example:`,
+      ``,
+      `  $ ${bin} completion:generate:alias --shell=${shell} ${
+        aliases[0]
+      } | tee ~/.local/share/bash-completion/completions/${scriptName(
+        aliases[0]
+      )}`
+    )
+  }
+
+  lines.push(
     ``,
     `For more info, visit: https://www.npmjs.com/package/oclif-plugin-completion#${shell}`,
     ``,
-    `Enjoy!`,
-  ]
+    `Enjoy!`
+  )
 
   return lines
 }

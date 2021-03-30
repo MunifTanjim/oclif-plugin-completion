@@ -4,7 +4,11 @@ import { getInstructionsForFish } from '../../utils/fish'
 import { getInstructionsForZsh } from '../../utils/zsh'
 
 export default class Completion extends CompletionBase {
-  static description = 'Generate shell completion script'
+  static description = [
+    `Generate shell completion script`,
+    ``,
+    `Run this command to see instructions for your shell.`,
+  ].join('\n')
 
   static args = []
 
@@ -16,17 +20,19 @@ export default class Completion extends CompletionBase {
 
   async run() {
     const { flags } = this.parse(Completion)
-    const { bin } = this.config
     const shell = flags.shell
+
+    const aliases = this.aliases
+    const { bin } = this.config
 
     let instructions: string[] = []
 
     if (shell === 'bash') {
-      instructions = getInstructionsForBash({ bin, shell })
+      instructions = getInstructionsForBash({ bin, shell, aliases })
     }
 
     if (shell === 'fish') {
-      instructions = getInstructionsForFish({ bin, shell })
+      instructions = getInstructionsForFish({ bin, shell, aliases })
     }
 
     if (shell === 'zsh') {
