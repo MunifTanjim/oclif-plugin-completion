@@ -51,3 +51,10 @@
 
 * escape description string for fish properly ([52aff4a](https://github.com/MunifTanjim/oclif-plugin-completion/commit/52aff4af19e49ff0e4fbd6fb16904afab448413c))
 
+### [0.5.1](https://github.com/MunifTanjim/oclif-plugin-completion/compare/0.5.0...0.5.1) (2021-03-30)
+
+
+### Features
+
+* update description ([1a39c43](https://github.com/MunifTanjim/oclif-plugin-completion/commit/1a39c4329c163b6a6cfc1ec261a30f21470b5ef9))
+
